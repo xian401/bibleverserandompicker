@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Verse Generator</title>
+    <style>
+        body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+        }
+
+        h1 {
+        color: #07b42c;
+        margin-bottom: 30px;
+        }
+
+        #verse {
+        font-size: 22px;
+        color: #333;
+        margin: 40px 0;
+        max-width: 700px;
+        line-height: 1.5;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s;
+        }
+        #vor {
+        font-size: 10px;
+        color: #333;
+        margin: 70px 0;
+        max-width: 600px;
+        line-height: 1.5;
+        background-color: #ffffff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s;
+        }
+
+        button {
+        padding: 12px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        button:hover {
+        background-color: #45a049;
+        }
+    </style>
+    </head>
+    <body>
+    <h1>Bible Verse Generator</h1>
+    <div id="verse">Click the button to get a verse!</div>
+    <button onclick="generateVerse()">CLICK ME</button>
+    <div id="vor">Created by: Christian Achera</div>    
+    <script>
+        const verses = [
+        "For God so loved the world, that he gave his only Son. - John 3:16",
+        "I can do all things through Christ who strengthens me. - Philippians 4:13",
+        "Trust in the Lord with all your heart, and lean not on your own understanding. - Proverbs 3:5",
+        "The Lord is my shepherd; I shall not want. - Psalm 23:1",
+        "Be strong and courageous. Do not be afraid; do not be discouraged. - Joshua 1:9",
+        "Rejoice in the Lord always. - Philippians 4:4",
+        "The Lord is my light and my salvation—whom shall I fear? - Psalm 27:1",
+        "Commit to the Lord whatever you do, and he will establish your plans. - Proverbs 16:3",
+        "Cast all your anxiety on him because he cares for you. - 1 Peter 5:7",
+        "Love is patient, love is kind. - 1 Corinthians 13:4",
+        "Do not be anxious about anything. - Philippians 4:6",
+        "For I know the plans I have for you, declares the Lord. - Jeremiah 29:11",
+        "The steadfast love of the Lord never ceases. - Lamentations 3:22",
+        "Your word is a lamp to my feet and a light to my path. - Psalm 119:105",
+        "Blessed is the one who perseveres under trial. - James 1:12",
+        "The Lord is good, a refuge in times of trouble. - Nahum 1:7",
+        "Do everything in love. - 1 Corinthians 16:14",
+        "Be still, and know that I am God. - Psalm 46:10",
+        "He gives strength to the weary. - Isaiah 40:29",
+        "Taste and see that the Lord is good. - Psalm 34:8",
+        "Do not let your hearts be troubled. - John 14:1",
+        "Come to me, all you who are weary. - Matthew 11:28",
+        "The Lord is compassionate and gracious. - Psalm 103:8",
+        "In all your ways submit to him. - Proverbs 3:6",
+        "The righteous cry out, and the Lord hears them. - Psalm 34:17",
+        "For the Spirit God gave us does not make us timid. - 2 Timothy 1:7",
+        "Blessed are the peacemakers. - Matthew 5:9",
+        "Do not conform to the pattern of this world. - Romans 12:2",
+        "Let your light shine before others. - Matthew 5:16",
+        "Forgive, and you will be forgiven. - Luke 6:37",
+        "Seek first his kingdom. - Matthew 6:33",
+        "Do not be overcome by evil, but overcome evil with good. - Romans 12:21",
+        "Delight yourself in the Lord. - Psalm 37:4",
+        "A friend loves at all times. - Proverbs 17:17",
+        "He heals the brokenhearted. - Psalm 147:3",
+        "The Lord is near to all who call on him. - Psalm 145:18",
+        "Let us not become weary in doing good. - Galatians 6:9",
+        "Therefore encourage one another. - 1 Thessalonians 5:11",
+        "Be joyful in hope, patient in affliction. - Romans 12:12",
+        "God is our refuge and strength. - Psalm 46:1",
+        "Faith, hope, and love remain. - 1 Corinthians 13:13",
+        "Bear with each other. - Colossians 3:13",
+        "Pray continually. - 1 Thessalonians 5:17",
+        "Give thanks in all circumstances. - 1 Thessalonians 5:18",
+        "Let everything that has breath praise the Lord. - Psalm 150:6",
+        "Humble yourselves before the Lord. - James 4:10",
+        "The Lord will fight for you; you need only to be still. - Exodus 14:14",
+        "The name of the Lord is a strong tower. - Proverbs 18:10",
+        "He who dwells in the shelter of the Most High will rest in the shadow of the Almighty. - Psalm 91:1",
+        "Do not fear, for I am with you. - Isaiah 41:10",
+        "Cast your cares on the Lord. - Psalm 55:22",
+        "The Lord bless you and keep you. - Numbers 6:24",
+        "God is love. - 1 John 4:8",
+        "We love because he first loved us. - 1 John 4:19",
+        "The Lord is righteous in all his ways. - Psalm 145:17",
+        "Let your speech always be gracious. - Colossians 4:6",
+        "My grace is sufficient for you. - 2 Corinthians 12:9",
+        "Be strong and take heart. - Psalm 31:24",
+        "He will supply all your needs. - Philippians 4:19",
+        "The Lord is my strength and my shield. - Psalm 28:7",
+        "I have fought the good fight. - 2 Timothy 4:7",
+        "The joy of the Lord is your strength. - Nehemiah 8:10",
+        "God will wipe every tear from their eyes. - Revelation 21:4",
+        "Rejoice in hope, be patient in tribulation. - Romans 12:12",
+        "The Lord your God is with you. - Zephaniah 3:17",
+        "Be kind and compassionate. - Ephesians 4:32",
+        "Walk by the Spirit. - Galatians 5:16",
+        "Put on the full armor of God. - Ephesians 6:11",
+        "Do not be afraid, little flock. - Luke 12:32",
+        "God is our refuge. - Psalm 46:1",
+        "Wait for the Lord; be strong and take heart. - Psalm 27:14",
+        "Trust in the Lord forever. - Isaiah 26:4",
+        "Serve the Lord with gladness. - Psalm 100:2",
+        "The Lord is merciful and gracious. - Psalm 103:8",
+        "Cast your burden on the Lord. - Psalm 55:22",
+        "Pray without ceasing. - 1 Thessalonians 5:17",
+        "Give thanks to the Lord, for he is good. - Psalm 107:1",
+        "He will not let your foot slip. - Psalm 121:3",
+        "I have set the Lord always before me. - Psalm 16:8",
+        "Do not be afraid; just believe. - Mark 5:36",
+        "Love one another. - John 13:34",
+        "Be merciful, just as your Father is merciful. - Luke 6:36",
+        "Let the peace of Christ rule in your hearts. - Colossians 3:15",
+        "Blessed are those who hunger and thirst for righteousness. - Matthew 5:6",
+        "The Lord is good to all. - Psalm 145:9",
+        "A soft answer turns away wrath. - Proverbs 15:1",
+        "The Lord is my rock and my fortress. - Psalm 18:2",
+        "I sought the Lord, and he answered me. - Psalm 34:4",
+        "Be faithful, even to the point of death. - Revelation 2:10",
+        "The fear of the Lord is the beginning of wisdom. - Proverbs 9:10",
+        "He will guide you always. - Isaiah 58:11",
+        "Commit your way to the Lord; trust in him. - Psalm 37:5",
+        "The Lord will provide. - Genesis 22:14",
+        "Your sins are forgiven. - Matthew 9:2",
+        "God will never leave you nor forsake you. - Hebrews 13:5",
+        "Do not worry about tomorrow. - Matthew 6:34",
+        "Blessed are the meek, for they shall inherit the earth. - Matthew 5:5",
+        "Let us run with perseverance the race marked out for us. - Hebrews 12:1",
+        "The Lord is gracious and compassionate. - Psalm 145:8",
+        "Pray for those who persecute you. - Matthew 5:44",
+        "Do not judge, or you too will be judged. - Matthew 7:1",
+        "Be clothed with humility. - 1 Peter 5:5",
+        "God works all things together for good. - Romans 8:28",
+        "Behold, I am making all things new. - Revelation 21:5",
+        "Come near to God and he will come near to you. - James 4:8",
+        "The Lord is faithful. - 1 Corinthians 1:9",
+        "Peace I leave with you; my peace I give you. - John 14:27",
+        "Bear one another's burdens. - Galatians 6:2",
+        "Let the morning bring me word of your unfailing love. - Psalm 143:8",
+        "God is our refuge and strength. - Psalm 46:1",
+        "Those who hope in the Lord will renew their strength. - Isaiah 40:31",
+        "The Lord is my helper; I will not be afraid. - Hebrews 13:6",
+        "Do not let the sun go down on your anger. - Ephesians 4:26",
+        "Be on your guard; stand firm in the faith. - 1 Corinthians 16:13",
+        "The Lord is righteous in all his ways. - Psalm 145:17",
+        "God is love, and whoever abides in love abides in God. - 1 John 4:16"
+        ];
+
+        function generateVerse() {
+        const randomIndex = Math.floor(Math.random() * verses.length);
+        document.getElementById('verse').textContent = verses[randomIndex];
+        }
+    </script>
+    </body>
+    </html>
